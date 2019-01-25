@@ -1,0 +1,29 @@
+Q. Certain web pages are loading slow in user’s browser for our live web application. What steps will you take to resolve the issue?
+Solution: Image size of the pages can be reduced (.jpg, .png formats are best for optimized speed). We can check the response time of the server and reduce it. Caching can be enabled. HTTP requests can be minimized (more on page components are likely to increase the rendering time of a webpage). Unnecessary code, whitespace, indentation, linebreaks can be removed to make the site/page light. We can enable asynchronus loading of scripts and files. Improve DNS lookup, response, server processing. Enable compression (i.e gzip compression). Using CDN and external hosting platforms also can be a solution in case of providing large videos to reduce load time.
+
+Q.Imagine a scenario where a web application is serving from a single web server to the
+internet. What are the problems in this scenario? Design and architect a solution that will
+mitigate these problems? Or How would you design a scalable architecture with resiliency in
+mind for the following situations:
+a. if a service is resource intensive
+b. a service needs to be low latency
+c. if parts of a service need to be restricted to certain geographical boundaries
+Solution: There will be latency during high throughput. We can introduce load balancer (Amazon ELB and implement cluster of servers to overcome the issues. We can also implement  monitoring tools such as cloudwatch or DNS solution like route53 which  will actively do health check and route HTTP requests to node which  serving less requests to reduce latency. We can introduce geolocation service (i.e. amazon cloudfront). Here we need to maintain a blacklist which includes the region name to restrict from viewing the service. This tool will connect with a third-party geolocation database to check the request ip location to determine if content will be viewed.
+
+Q. Currently there’s no monitoring in place for the above single web server. How and what
+application will you use to monitor the resources/process in your new design?
+Solution: We can also implement  monitoring tools such as cloudwatch or DNS solution like route53 which  will actively do health check
+
+Q. In our server we want to create a user who can only view logs using `less` from this path /var/log. Please explain how to achieve this.
+Solution: Take copy of /bin/bash (i.e. /bin/modbash). Execute below:
+
+useradd -s /bin/modbash bongobd
+usermod -s /bin/modbash bongobd
+Then we need to modify the bash_profile of the user and change the path to /var/log/ under user's home directory. Then we need to create a soft link between  /bin/less and /var/log/.
+We can asssign immutaable tag on the bash_profile soo the user can't modify it.
+
+Q. Explain how you can ssh into a private server from the internet.
+Solution: We can SSH/sftp client. openssh rpms should be installed and  running in the target machine. To connnect from internet we need to assign one static ip in the server and assign this private ip in the router. Now if we request ssh on the public ip over internet, router will redirect the request to private server.
+
+Q. Write a bash function that will find all occurrences of an IPv4 from a given file.
+Solution: grep -E -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" file.txt
